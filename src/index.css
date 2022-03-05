@@ -19,6 +19,7 @@ small {
   /* border: 2px solid red; */
   display: block;
   text-align: right;
+  color: #9e0d9e;
 }
 #quote-box {
   background-color: #fff;
@@ -47,6 +48,7 @@ small {
   font-weight: 500;
   font-size: 1.75em;
   margin-bottom: 1rem;
+  color: #9e0d9e;
 }
 
 /* buttons container */

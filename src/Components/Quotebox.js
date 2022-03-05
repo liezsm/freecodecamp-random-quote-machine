@@ -10,7 +10,12 @@ import ButtonsContainer from './ButtonsContainer';
 class Quotebox extends React.Component {
 
     constructor(props){
-        super(props)
+        super(props);
+        this.state = {
+            color:"",
+            quote: 'Mementori Mori',
+            author: 'Stoic'
+        }
 
     }
 
@@ -28,7 +33,7 @@ class Quotebox extends React.Component {
        return hexColor;
     }
         ( async() => {      
-            console.log('clicked!')
+            // console.log('clicked!')
     try {
 
         const quotes = await fetch('https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json');
@@ -36,35 +41,43 @@ class Quotebox extends React.Component {
       
     //    console.log(data.quotes.length)
        const random = Math.floor( Math.random() * data.quotes.length)
-       console.log(data.quotes[random])
+    //    console.log(data.quotes[random])
         const {quote, author} = data.quotes[random]
-       document.getElementById('text').innerText = `${quote}`
-       document.getElementById('author').innerText = `${author}`
-    //    console.log(id, advice)
-
+    //    document.getElementById('text').innerText = `${quote}`
+    //    document.getElementById('author').innerText = `${author}`
+    this.setState( prevState => {
+        return {
+            ...prevState,
+            quote: quote,
+            author: author
+        }
+    })
         
     }catch(err){
         console.log(err)
     }
         })();
         const randomColor =  randomize();
-       document.querySelector('body').style.backgroundColor = randomColor;
-      const bgtoChange = document.querySelectorAll('.colorflip')
-        bgtoChange.forEach( i => {
-            i.style.backgroundColor = randomColor
-        })
-       const colortoChange = document.querySelectorAll('.flipcolortext');
-       colortoChange.forEach( i => i.style.color = randomColor)
+        this.setState({ color: randomColor})
+        document.querySelector('body').style.backgroundColor = randomColor;
+        
+    //   const bgtoChange = document.querySelectorAll('.colorflip')
+    //     bgtoChange.forEach( i => {
+    //         i.style.backgroundColor = randomColor
+    //     })
+    //    const colortoChange = document.querySelectorAll('.flipcolortext');
+    //    colortoChange.forEach( i => i.style.color = randomColor)
     }
    
 
     render(){
 
+        // console.log(this.state)
         return (
             <div id="quote-box">
                
-                < QuoteItem />
-                <ButtonsContainer newQuote ={this.handleClick} />
+                < QuoteItem data ={this.state} />
+                <ButtonsContainer newQuote ={this.handleClick} data = {this.state} />
               
             </div>
         )
